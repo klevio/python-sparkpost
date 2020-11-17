@@ -1,6 +1,7 @@
 import json
 from tornado import gen
 from tornado.httpclient import AsyncHTTPClient, HTTPError
+from tornado.httputil import url_concat
 
 from .exceptions import SparkPostAPIException
 
@@ -10,6 +11,8 @@ class TornadoTransport(object):
     def request(self, method, uri, headers, **kwargs):
         if "data" in kwargs:
             kwargs["body"] = kwargs.pop("data")
+        if "params" in kwargs:
+            uri = url_concat(uri, kwargs.pop("params"))
         client = AsyncHTTPClient()
         try:
             response = yield client.fetch(uri, method=method, headers=headers,
