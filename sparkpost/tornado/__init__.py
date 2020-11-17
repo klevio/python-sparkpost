@@ -3,6 +3,7 @@ import sparkpost
 from .exceptions import SparkPostAPIException
 from .base import TornadoTransport
 from .transmissions import Transmissions
+from ..events import Events
 
 __all__ = ["SparkPost", "TornadoTransport", "SparkPostAPIException",
            "Transmissions"]
@@ -16,3 +17,5 @@ class SparkPost(sparkpost.SparkPost):
         self.transmissions = Transmissions(self.base_uri, self.api_key,
                                            self.TRANSPORT_CLASS)
         self.transmission = self.transmissions
+        self.events = Events(self.base_uri, self.api_key,
+                             self.TRANSPORT_CLASS)
