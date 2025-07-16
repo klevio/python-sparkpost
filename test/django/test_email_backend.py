@@ -1,18 +1,24 @@
 import pytest
 import mock
 
-from django.conf import settings
-from django.core.mail import send_mail
-from django.core.mail import send_mass_mail
-from django.core.mail import EmailMultiAlternatives
-from django.utils.functional import empty
+try:
+    from django.conf import settings
+    from django.core.mail import send_mail
+    from django.core.mail import send_mass_mail
+    from django.core.mail import EmailMultiAlternatives
+    from django.utils.functional import empty
 
-from sparkpost import EU_API, US_API
-from sparkpost.django.email_backend import SparkPostEmailBackend
-from sparkpost.django.exceptions import UnsupportedContent
-from sparkpost.transmissions import Transmissions
+    from sparkpost import EU_API, US_API
+    from sparkpost.django.email_backend import SparkPostEmailBackend
+    from sparkpost.django.exceptions import UnsupportedContent
+    from sparkpost.transmissions import Transmissions
+except ImportError:
+    pass
+
 
 API_KEY = 'API_Key'
+
+pytest.importorskip("django")
 
 
 def reconfigure_settings(**new_settings):

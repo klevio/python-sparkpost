@@ -4,12 +4,16 @@ import os
 import tempfile
 
 import pytest
-import six
 
-from sparkpost.tornado import SparkPost, SparkPostAPIException
-from tornado import ioloop
-from .utils import AsyncClientMock
+try:
+    import six
+    from sparkpost.tornado import SparkPost, SparkPostAPIException
+    from tornado import ioloop
+    from .utils import AsyncClientMock
+except ImportError:
+    pass
 
+pytest.importorskip("tornado")
 responses = AsyncClientMock()
 
 

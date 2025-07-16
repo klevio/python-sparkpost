@@ -1,10 +1,18 @@
-from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
-from django.core.mail.message import EmailMessage
-from django.utils.functional import empty
+import pytest
 
-from sparkpost.django.message import SparkPostMessage
-from .utils import at_least_version
+try:
+    from django.conf import settings
+    from django.core.mail import EmailMultiAlternatives
+    from django.core.mail.message import EmailMessage
+    from django.utils.functional import empty
+
+    from sparkpost.django.message import SparkPostMessage
+    from .utils import at_least_version
+except ImportError:
+    pass
+
+
+pytest.importorskip("django")
 
 
 def reconfigure_settings(**new_settings):
